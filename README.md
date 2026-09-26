@@ -1,6 +1,6 @@
-<a href="https://www.linkedin.com/in/vicente-torres-aragon/"><img src="assets/op.svg" width="100%" alt="Vicente Torres. From intern in Jerez to Tech Lead in Barcelona. Tech Lead at Holded: the Holded frontend in React and TypeScript, hiring and growing the frontend team. Creator of AniJams."></a>
+<a href="https://www.linkedin.com/in/vicente-torres-aragon/"><img src="assets/op.svg" width="100%" alt="Vicente Torres. Eleven years building for the web, the last five at Holded. Tech Lead at Holded: the Holded frontend in React and TypeScript, hiring and growing the frontend team. Creator of AniJams."></a>
 
-### Eleven years building for the web. The last five at Holded, from developer to Tech Lead.
+### I lead the frontend at Holded.
 
 I started in 2015 as an intern in Jerez de la Frontera. Five companies and one move to Barcelona
 later, I'm Tech Lead at [Holded](https://www.holded.com), the business management software for

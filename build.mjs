@@ -137,7 +137,7 @@ function hero() {
 <g class="airing">${equalizer(48, 58)}<text class="dot" x="86" y="58" font-size="16" fill="${C.dim}">Now airing: episode 7</text></g>
 <g clip-path="url(#line1)"><text class="zen rise" x="42" y="160" font-size="100" font-weight="700" letter-spacing="-2" fill="${C.cream}">Vicente</text></g>
 <g clip-path="url(#line2)"><text class="zen rise" x="42" y="252" font-size="100" font-weight="700" letter-spacing="-2" fill="${C.cream}" style="animation-delay:.42s">Torres</text></g>
-<text class="zen credit" x="44" y="300" font-size="21" fill="${C.dim}" style="animation-delay:1.1s">From intern in Jerez to Tech Lead in Barcelona.</text>
+<text class="zen credit" x="44" y="300" font-size="21" fill="${C.dim}" style="animation-delay:1.1s">Eleven years building for the web. The last five at Holded.</text>
 ${credits}
 ${column}`;
 
@@ -145,7 +145,7 @@ ${column}`;
     w,
     h,
     title: "Vicente Torres, Tech Lead at Holded",
-    desc: "From intern in Jerez to Tech Lead in Barcelona. Opening credits: direction, Tech Lead at Holded; architecture, the Holded frontend in React and TypeScript; casting, hiring and growing the frontend team; original work, AniJams.",
+    desc: "Eleven years building for the web, the last five at Holded. Opening credits: direction, Tech Lead at Holded; architecture, the Holded frontend in React and TypeScript; casting, hiring and growing the frontend team; original work, AniJams.",
     fonts: ["zen400", "zen500", "zen700", "dot", "kana"],
     css,
     defs,
