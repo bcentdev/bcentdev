@@ -1,4 +1,4 @@
-<a href="https://www.linkedin.com/in/vicente-torres-aragon/"><img src="assets/op.svg" width="100%" alt="Vicente Torres. Eleven years building for the web, the last five at Holded. Tech Lead at Holded: the Holded frontend in React and TypeScript, hiring and growing the frontend team. Creator of AniJams."></a>
+<a href="https://www.linkedin.com/in/vicente-torres-aragon/"><img src="assets/hero.svg" width="100%" alt="Vicente Torres, inspected in browser developer tools. Eleven years building for the web, the last five at Holded. Tech Lead at Holded: owns the frontend architecture, builds with React and TypeScript, hires and grows the team. On weekends, anijams.com."></a>
 
 ### I lead the frontend at Holded.
 
@@ -10,7 +10,7 @@ on it and hire the ones who join.
 I graduated first in my cohort from LIDR's tech leadership master, and I never stopped writing
 code: 4,400+ contributions in the last year.
 
-<img src="assets/episodes.svg" width="100%" alt="Career as an episode guide: 2015 Full Stack Developer at Xerintel, 2017 Software Engineer at ALEA, 2018 Full Stack Developer at Boxmotions, 2020 Full Stack Developer at Master Camping, 2021 Frontend Developer at Holded, 2024 Frontend Lead, 2026 Tech Lead.">
+<img src="assets/career.svg" width="100%" alt="Career as a performance recording, since March 2015: Xerintel in Jerez, intern then full-stack developer. Moved to Barcelona in 2017. ALEA, software engineer. Boxmotions, full-stack developer. Master Camping, full-stack developer. Holded since 2021: frontend developer, frontend lead from 2024, Tech Lead since September 2026. Launched AniJams in July 2026.">
 
 ### And on weekends, I launch things.
 
