@@ -81,12 +81,12 @@ function equalizer(x, baseline) {
 
 function hero() {
   const w = 960;
-  const h = 450;
+  const h = 480;
   const kana = ["ビ", "セ", "ン", "テ", "・", "ト", "ー", "レ", "ス"];
   const kanaX = 872;
   const column = kana
     .map((ch, i) => {
-      const y = 82 + i * 42;
+      const y = 82 + i * 44;
       // Vertical Japanese turns the long-vowel bar upright.
       const turn = ch === "ー" ? ` transform="rotate(90 ${kanaX} ${y - 14})"` : "";
       return `<g class="k" style="animation-delay:${(0.45 + i * 0.07).toFixed(2)}s"><text class="kana" x="${kanaX}" y="${y}" text-anchor="middle" font-size="40" fill="${C.neon}" filter="url(#neon)"${turn}>${ch}</text></g>`;
@@ -95,13 +95,13 @@ function hero() {
 
   const credits = [
     ["Direction", "Tech Lead at Holded"],
-    ["Architecture", "Frontend, in React and TypeScript"],
-    ["Casting", "Hiring and training the frontend team"],
-    ["Original work", "AniJams, a daily anime music quiz"],
+    ["Architecture", "The Holded frontend, in React and TypeScript"],
+    ["Casting", "Hiring and growing the frontend team"],
+    ["Original work", "AniJams, the daily anime music game"],
   ]
     .map(([role, name], i) => {
-      const y = 318 + i * 32;
-      return `<g class="credit" style="animation-delay:${(1.2 + i * 0.12).toFixed(2)}s">
+      const y = 352 + i * 32;
+      return `<g class="credit" style="animation-delay:${(1.35 + i * 0.12).toFixed(2)}s">
 <text class="dot" x="48" y="${y}" font-size="16" fill="${C.cyan}">${role}</text>
 <text class="zen" x="200" y="${y}" font-size="19" font-weight="500" fill="${C.cream}">${name}</text>
 </g>`;
@@ -124,7 +124,7 @@ function hero() {
 
   const defs = `
 <radialGradient id="glow" cx="${kanaX}" cy="230" r="330" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.neon}" stop-opacity=".2"/><stop offset="1" stop-color="${C.neon}" stop-opacity="0"/></radialGradient>
-<radialGradient id="glow2" cx="120" cy="450" r="360" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.cyan}" stop-opacity=".07"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></radialGradient>
+<radialGradient id="glow2" cx="120" cy="480" r="360" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.cyan}" stop-opacity=".07"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></radialGradient>
 <linearGradient id="streak" x1="0" x2="1"><stop offset="0" stop-color="${C.neon}" stop-opacity="0"/><stop offset=".7" stop-color="${C.neon}" stop-opacity=".45"/><stop offset=".94" stop-color="${C.cream}" stop-opacity=".8"/><stop offset="1" stop-color="${C.cream}" stop-opacity="0"/></linearGradient>
 <filter id="neon" x="-50%" y="-20%" width="200%" height="140%"><feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="${C.neon}" flood-opacity=".75"/></filter>
 <clipPath id="line1"><rect x="0" y="60" width="780" height="118"/></clipPath>
@@ -134,9 +134,10 @@ function hero() {
 <rect width="${w}" height="${h}" fill="url(#glow)"/>
 <rect width="${w}" height="${h}" fill="url(#glow2)"/>
 <g transform="skewX(-24)"><rect class="sweep" x="-300" y="0" width="420" height="${h}" fill="url(#streak)"/></g>
-<g class="airing">${equalizer(48, 58)}<text class="dot" x="86" y="58" font-size="16" fill="${C.dim}">Now airing: episode 6</text></g>
+<g class="airing">${equalizer(48, 58)}<text class="dot" x="86" y="58" font-size="16" fill="${C.dim}">Now airing: episode 7</text></g>
 <g clip-path="url(#line1)"><text class="zen rise" x="42" y="160" font-size="100" font-weight="700" letter-spacing="-2" fill="${C.cream}">Vicente</text></g>
 <g clip-path="url(#line2)"><text class="zen rise" x="42" y="252" font-size="100" font-weight="700" letter-spacing="-2" fill="${C.cream}" style="animation-delay:.42s">Torres</text></g>
+<text class="zen credit" x="44" y="300" font-size="21" fill="${C.dim}" style="animation-delay:1.1s">From intern in Jerez to Tech Lead in Barcelona.</text>
 ${credits}
 ${column}`;
 
@@ -144,8 +145,8 @@ ${column}`;
     w,
     h,
     title: "Vicente Torres, Tech Lead at Holded",
-    desc: "Opening credits: direction, Tech Lead at Holded; architecture, frontend in React and TypeScript; casting, hiring and training the frontend team; original work, AniJams.",
-    fonts: ["zen500", "zen700", "dot", "kana"],
+    desc: "From intern in Jerez to Tech Lead in Barcelona. Opening credits: direction, Tech Lead at Holded; architecture, the Holded frontend in React and TypeScript; casting, hiring and growing the frontend team; original work, AniJams.",
+    fonts: ["zen400", "zen500", "zen700", "dot", "kana"],
     css,
     defs,
     body,
@@ -154,8 +155,9 @@ ${column}`;
 
 function episodes() {
   const w = 960;
-  const h = 420;
+  const h = 470;
   const list = [
+    ["2015", "Full Stack Developer", "Xerintel", 23],
     ["2017", "Software Engineer", "ALEA", 17],
     ["2018", "Full Stack Developer", "Boxmotions", 24],
     ["2020", "Full Stack Developer", "Master Camping", 14],
@@ -195,11 +197,10 @@ ${status}
     })
     .join("\n");
 
-  // Three rows at one company, joined, so the promotions read as a ladder.
-  const holdedTop = top + 3 * step - 5;
-  const holdedBottom = top + 5 * step - 5;
-  const ladder = `<path d="M418 ${holdedTop}V${holdedBottom}" stroke="${C.edge}" stroke-width="2"/>${[3, 4, 5]
-    .map((i) => `<circle cx="418" cy="${top + i * step - 5}" r="3.5" fill="${i === 5 ? C.neon : C.edge}"/>`)
+  // The rows at Holded are joined, so the promotions read as a ladder.
+  const holded = list.flatMap((row, i) => (row[2] === "Holded" ? [top + i * step - 5] : []));
+  const ladder = `<path d="M418 ${holded[0]}V${holded.at(-1)}" stroke="${C.edge}" stroke-width="2"/>${holded
+    .map((cy, i) => `<circle cx="418" cy="${cy}" r="3.5" fill="${i === holded.length - 1 ? C.neon : C.edge}"/>`)
     .join("")}`;
 
   const css = `
@@ -210,7 +211,7 @@ ${status}
 
   const body = `
 <text class="zen" x="44" y="62" font-size="24" font-weight="700" fill="${C.cream}">Episode guide</text>
-<text class="dot" x="${w - 44}" y="62" font-size="16" fill="${C.dim}" text-anchor="end">2017 to now</text>
+<text class="dot" x="${w - 44}" y="62" font-size="16" fill="${C.dim}" text-anchor="end">2015 to now</text>
 ${ladder}
 ${rows}`;
 
@@ -218,7 +219,7 @@ ${rows}`;
     w,
     h,
     title: "Career, as an episode guide",
-    desc: "2017 Software Engineer at ALEA. 2018 Full Stack Developer at Boxmotions. 2020 Full Stack Developer at Master Camping. 2021 Frontend Developer at Holded, promoted to Frontend Lead in 2024 and to Tech Lead in 2026.",
+    desc: "2015 Full Stack Developer at Xerintel, starting as an intern. 2017 Software Engineer at ALEA. 2018 Full Stack Developer at Boxmotions. 2020 Full Stack Developer at Master Camping. 2021 Frontend Developer at Holded, promoted to Frontend Lead in 2024 and to Tech Lead in 2026.",
     fonts: ["zen400", "zen500", "zen700", "dot"],
     css,
     body,
@@ -226,25 +227,31 @@ ${rows}`;
 }
 
 function aniJams() {
-  const w = 480;
-  const h = 328;
+  const w = 960;
+  const h = 300;
   const unlocks = [1, 2, 4, 7, 11, 16];
   const total = unlocks.at(-1);
-  const x0 = 32;
-  const span = 416;
+  const x0 = 472;
+  const span = 444;
   const bars = 64;
-  const mid = 186;
+  const mid = 140;
+  const tickY = 220;
 
   const heights = Array.from({ length: bars }, (_, i) => {
     const t = i / bars;
     const envelope = 0.6 + 0.4 * Math.min(1, t * 3);
     const texture = 0.4 + 0.6 * Math.abs(Math.sin(i * 1.71) * Math.cos(i * 0.43 + 1));
-    return Math.max(4, 64 * envelope * texture);
+    return Math.max(4, 84 * envelope * texture);
   });
   const segmentOf = (i) => unlocks.findIndex((s) => ((i + 0.5) / bars) * total < s);
   const bar = (i, fill) => {
     const bh = heights[i];
-    return `<rect x="${(x0 + i * (span / bars)).toFixed(1)}" y="${(mid - bh / 2).toFixed(1)}" width="4" height="${bh.toFixed(1)}" rx="1.5" fill="${fill}"/>`;
+    return `<rect x="${(x0 + i * (span / bars)).toFixed(1)}" y="${(mid - bh / 2).toFixed(1)}" width="4.5" height="${bh.toFixed(1)}" rx="1.5" fill="${fill}"/>`;
+  };
+  const tick = (k, fill) => {
+    const x = x0 + (unlocks[k] / total) * span;
+    const anchor = k === unlocks.length - 1 ? "end" : "middle";
+    return `<text class="dot" x="${x.toFixed(1)}" y="${tickY}" font-size="13" fill="${fill}" text-anchor="${anchor}">${unlocks[k]}s</text>`;
   };
 
   // Each try unlocks more of the clip, 1s, 2s, 4s... The loop replays that
@@ -265,102 +272,54 @@ function aniJams() {
         .filter((i) => segmentOf(i) === k)
         .map((i) => bar(i, C.neon))
         .join("");
-      const x = x0 + (unlocks[k] / total) * span;
-      const anchor = k === unlocks.length - 1 ? "end" : "middle";
-      const label = `<text class="dot" x="${x.toFixed(1)}" y="250" font-size="13" fill="${C.neon}" text-anchor="${anchor}">${unlocks[k]}s</text>`;
-      return `<g class="seg" style="animation-name:s${k}${k === 0 ? ";opacity:1" : ""}">${lit}${label}</g>`;
+      return `<g class="seg" style="animation-name:s${k}${k === 0 ? ";opacity:1" : ""}">${lit}${tick(k, C.neon)}</g>`;
     })
     .join("");
-  const ticks = unlocks
-    .map((s, k) => {
-      const x = x0 + (s / total) * span;
-      const anchor = k === unlocks.length - 1 ? "end" : "middle";
-      return `<text class="dot" x="${x.toFixed(1)}" y="250" font-size="13" fill="${C.wave}" text-anchor="${anchor}">${s}s</text>`;
-    })
+
+  const stats = [
+    ["1,527", "songs", 44],
+    ["394", "anime", 172],
+    ["0", "frameworks", 270],
+  ]
+    .map(
+      ([value, label, x]) =>
+        `<text class="zen" x="${x}" y="226" font-size="30" font-weight="700" fill="${C.cream}">${value}</text><text class="dot" x="${x}" y="252" font-size="16" fill="${C.dim}">${label}</text>`,
+    )
     .join("");
 
   const css = `
 .seg{opacity:0;animation:${period}s linear infinite}
 ${keyframes}`;
 
-  const defs = `<filter id="neon" x="-20%" y="-50%" width="140%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="${C.neon}" flood-opacity=".8"/></filter>`;
+  const defs = `
+<filter id="neon" x="-20%" y="-50%" width="140%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="${C.neon}" flood-opacity=".8"/></filter>
+<radialGradient id="glow" cx="${x0 + span / 2}" cy="${mid}" r="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${C.neon}" stop-opacity=".12"/><stop offset="1" stop-color="${C.neon}" stop-opacity="0"/></radialGradient>`;
 
   const body = `
-<text class="dot" x="32" y="68" font-size="40" fill="${C.cream}" filter="url(#neon)">AniJams</text>
-<text class="zen" x="32" y="106" font-size="17" fill="${C.dim}">Hear one second of an anime opening.</text>
-<text class="zen" x="32" y="130" font-size="17" fill="${C.dim}">Miss, and the next try plays more of it.</text>
+<rect width="${w}" height="${h}" fill="url(#glow)"/>
+<text class="dot" x="44" y="88" font-size="48" fill="${C.cream}" filter="url(#neon)">AniJams</text>
+<text class="zen" x="44" y="130" font-size="20" fill="${C.cream}">One second of an anime opening.</text>
+<text class="zen" x="44" y="158" font-size="20" fill="${C.dim}">Name the show, or hear a little more.</text>
+${stats}
 ${heights.map((_, i) => bar(i, C.wave)).join("")}
-${ticks}
+${unlocks.map((_, k) => tick(k, C.wave)).join("")}
 ${segments}
-<text class="zen" x="32" y="300" font-size="16" font-weight="500" fill="${C.cream}">1,527 songs from 394 anime</text>
-<text class="dot" x="448" y="300" font-size="16" fill="${C.neon}" text-anchor="end">Play today's song</text>`;
+<text class="dot" x="916" y="262" font-size="16" fill="${C.neon}" text-anchor="end">Play today's song at anijams.com</text>`;
 
   return svg({
     w,
     h,
     title: "AniJams",
-    desc: "AniJams, a daily anime music quiz: hear one second of an opening, and each miss unlocks more of it. 1,527 songs from 394 anime.",
-    fonts: ["zen400", "zen500", "dot"],
+    desc: "AniJams, the daily anime music game: one second of an anime opening, name the show or hear a little more. 1,527 songs, 394 anime, zero frameworks. Play today's song at anijams.com.",
+    fonts: ["zen400", "zen700", "dot"],
     css,
     defs,
     body,
   });
 }
 
-function soku() {
-  const w = 480;
-  const h = 328;
-  const command = "$ soku build";
-  const typed = [...command]
-    .map(
-      (ch, i) =>
-        `<tspan class="type" style="animation-delay:${(0.5 + i * 0.055).toFixed(3)}s">${ch === " " ? "&#160;" : ch}</tspan>`,
-    )
-    .join("");
-  const steps = [
-    ["parse", "oxc"],
-    ["styles", "lightningcss"],
-    ["write", "dist/"],
-  ]
-    .map(([stage, tool], i) => {
-      const y = 210 + i * 24;
-      const at = 1.35 + i * 0.35;
-      return `<g class="line" style="animation-delay:${at.toFixed(2)}s">
-<text class="dot" x="52" y="${y}" font-size="16" fill="${C.dim}">${stage}</text>
-<text class="dot" x="136" y="${y}" font-size="16" fill="${C.cream}">${tool}</text>
-</g>
-<text class="dot line" x="428" y="${y}" font-size="16" fill="${C.cyan}" text-anchor="end" style="animation-delay:${(at + 0.25).toFixed(2)}s">done</text>`;
-    })
-    .join("");
-
-  const css = `
-.type{animation:type .01s linear backwards}
-@keyframes type{from{fill-opacity:0}}
-.line{animation:fade .3s ease backwards}
-@keyframes fade{from{opacity:0}}`;
-
-  const body = `
-<text class="zen" x="32" y="68" font-size="38" font-weight="700" letter-spacing="-.5" fill="${C.cream}">soku</text>
-<text class="zen" x="32" y="106" font-size="17" fill="${C.dim}">A JavaScript and CSS bundler written in Rust,</text>
-<text class="zen" x="32" y="130" font-size="17" fill="${C.dim}">built on oxc and Lightning CSS.</text>
-<rect x="32" y="150" width="416" height="122" rx="10" fill="${C.panel}" stroke="${C.edge}"/>
-<text class="dot" x="52" y="182" font-size="16" fill="${C.cream}">${typed}</text>
-${steps}
-<text class="zen" x="32" y="300" font-size="16" fill="${C.dim}">Private while it's in progress</text>`;
-
-  return svg({
-    w,
-    h,
-    title: "soku",
-    desc: "soku, a JavaScript and CSS bundler written in Rust on oxc and Lightning CSS. Private while it's in progress.",
-    fonts: ["zen400", "zen700", "dot"],
-    css,
-    body,
-  });
-}
-
 mkdirSync("assets", { recursive: true });
-const out = { "op.svg": hero(), "episodes.svg": episodes(), "anijams.svg": aniJams(), "soku.svg": soku() };
+const out = { "op.svg": hero(), "episodes.svg": episodes(), "anijams.svg": aniJams() };
 for (const [file, content] of Object.entries(out)) {
   writeFileSync(join("assets", file), content);
   console.log(`assets/${file}  ${(content.length / 1024).toFixed(1)} KB`);

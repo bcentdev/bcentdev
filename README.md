@@ -1,22 +1,24 @@
-<a href="https://www.linkedin.com/in/vicente-torres-aragon/"><img src="assets/op.svg" width="100%" alt="Vicente Torres. Tech Lead at Holded: frontend architecture in React and TypeScript, hiring and training the frontend team. Creator of AniJams."></a>
+<a href="https://www.linkedin.com/in/vicente-torres-aragon/"><img src="assets/op.svg" width="100%" alt="Vicente Torres. From intern in Jerez to Tech Lead in Barcelona. Tech Lead at Holded: the Holded frontend in React and TypeScript, hiring and growing the frontend team. Creator of AniJams."></a>
 
-I'm a Tech Lead at [Holded](https://www.holded.com) in Barcelona. I joined in 2021 as a frontend
-developer, became frontend lead in 2024 and tech lead in 2026. The job is the frontend
-architecture, leading frontend projects, training the team and hiring the people who join it.
+### Eleven years building for the web. The last five at Holded, from developer to Tech Lead.
 
-Before Holded I spent four years as a full stack developer at ALEA, Boxmotions and Master Camping.
-In 2024 I finished LIDR's tech leadership master at the top of my cohort.
+I started in 2015 as an intern in Jerez de la Frontera. Five companies and one move to Barcelona
+later, I'm Tech Lead at [Holded](https://www.holded.com), the business management software for
+SMEs and freelancers. I own the frontend architecture, lead the team's projects, train the people
+on it and hire the ones who join.
 
-<img src="assets/episodes.svg" width="100%" alt="Career as an episode guide: 2017 Software Engineer at ALEA, 2018 Full Stack Developer at Boxmotions, 2020 Full Stack Developer at Master Camping, 2021 Frontend Developer at Holded, 2024 Frontend Lead, 2026 Tech Lead.">
+I graduated first in my cohort from LIDR's tech leadership master, and I never stopped writing
+code: 4,400+ contributions in the last year.
 
-On the side I build small products end to end, from the idea to the deploy.
+<img src="assets/episodes.svg" width="100%" alt="Career as an episode guide: 2015 Full Stack Developer at Xerintel, 2017 Software Engineer at ALEA, 2018 Full Stack Developer at Boxmotions, 2020 Full Stack Developer at Master Camping, 2021 Frontend Developer at Holded, 2024 Frontend Lead, 2026 Tech Lead.">
 
-<a href="https://anijams.com"><img src="assets/anijams.svg" width="49%" alt="AniJams: hear one second of an anime opening, and each miss plays more of it. 1,527 songs from 394 anime. Play today's song at anijams.com."></a>
-<img src="assets/soku.svg" width="49%" alt="soku: a JavaScript and CSS bundler written in Rust, built on oxc and Lightning CSS. Private while it's in progress.">
+### And on weekends, I launch things.
 
-Upstream, I translated [`cloneElement`](https://github.com/reactjs/es.react.dev/pull/597) for the
-Spanish React docs and added [custom YAML output](https://github.com/i18next/i18next-parser/pull/626)
-to i18next-parser.
+AniJams took one weekend to build and has been live every day since: designed, built and shipped
+end to end, with no framework and no ads.
 
-Find me on [LinkedIn](https://www.linkedin.com/in/vicente-torres-aragon/), on
-[X](https://x.com/bcentdev) or at [iam@vicentetorr.es](mailto:iam@vicentetorr.es).
+<a href="https://anijams.com"><img src="assets/anijams.svg" width="100%" alt="AniJams, the daily anime music game: one second of an anime opening, name the show or hear a little more. 1,527 songs, 394 anime, zero frameworks. Play today's song at anijams.com."></a>
+
+Hiring, building something, or want to talk frontend leadership? Find me on
+[LinkedIn](https://www.linkedin.com/in/vicente-torres-aragon/), on [X](https://x.com/bcentdev)
+or at [iam@vicentetorr.es](mailto:iam@vicentetorr.es).
