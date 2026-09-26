@@ -90,6 +90,22 @@ function contrast(a, b) {
   return ((hi + 0.05) / (lo + 0.05)).toFixed(1);
 }
 
+// The DevTools panel tabs. Both images draw the same bar, so the hero reads as
+// the Elements panel and the career chart as the Performance panel of one tool.
+function devtoolsTabs(y, active) {
+  let x = 24;
+  return ["Elements", "Console", "Sources", "Performance"]
+    .map((tab) => {
+      const at = x;
+      x += tab.length * 7.2 + 30;
+      const on = tab === active;
+      return `<text class="m" x="${at}" y="${y + 23}" font-size="12.5" fill="${on ? B.snow : B.fog}">${tab}</text>${
+        on ? `<rect x="${at}" y="${y + 33}" width="${tab.length * 7.2}" height="2" fill="${B.content}"/>` : ""
+      }`;
+    })
+    .join("");
+}
+
 function hero() {
   const w = 960;
   const page = 448;
@@ -197,18 +213,7 @@ ${row(ty + 110, "Role", "heading")}
 
   // DevTools, docked below the page.
   const dy = page;
-  const tabs = ["Elements", "Console", "Sources", "Performance"];
-  let tabX = 24;
-  const tabRow = tabs
-    .map((tab, i) => {
-      const x = tabX;
-      tabX += tab.length * 7.2 + 30;
-      const active = i === 0;
-      return `<text class="m" x="${x}" y="${dy + 23}" font-size="12.5" fill="${active ? B.snow : B.fog}">${tab}</text>${
-        active ? `<rect x="${x}" y="${dy + 33}" width="${tab.length * 7.2}" height="2" fill="${B.content}"/>` : ""
-      }`;
-    })
-    .join("");
+  const tabRow = devtoolsTabs(dy, "Elements");
   const split = 492;
   const paneTabs = ["Styles", "Computed", "Layout"]
     .map((tab, i) => {
@@ -321,7 +326,7 @@ ${cursor}`;
 
 function career() {
   const w = 960;
-  const h = 372;
+  const h = 408;
   const now = new Date();
   // Months counted from March 2015, the first day at work.
   const month = (year, m) => (year - 2015) * 12 + (m - 3);
@@ -353,7 +358,8 @@ function career() {
     ["Tech lead", month(2026, 9), nowEnd, B.border],
   ];
 
-  const header = 44;
+  const bar = 36;
+  const header = bar + 44;
   const rulerY = header + 26;
   const timingsY = rulerY + 18;
   const mainY = timingsY + 58;
@@ -444,9 +450,14 @@ function career() {
 
   const body = `
 <rect width="${w}" height="${h}" fill="${B.graphite}"/>
-<circle class="rec" cx="${X0 + 6}" cy="23" r="6" fill="${B.rec}"/>
-<text class="m" x="${X0 + 22}" y="28" font-size="15" font-weight="600" fill="${B.snow}">Career, recorded since March 2015</text>
-<text class="m" x="${X1}" y="28" font-size="13" fill="${B.fog}" text-anchor="end">${tenure}</text>
+${devtoolsTabs(0, "Performance")}
+<path d="M0 ${bar - 0.5}H${w}" stroke="${B.rule}"/>
+<circle class="rec" cx="${X0 + 7}" cy="${bar + 22}" r="6" fill="${B.rec}"/>
+<path d="M${X0 + 38} ${bar + 22}a6 6 0 1 0 1.8-4.3M${X0 + 39.8} ${bar + 13.5}v4.2h4.2" fill="none" stroke="${B.fog}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="${X0 + 66}" cy="${bar + 22}" r="6" fill="none" stroke="${B.fog}" stroke-width="1.5"/><path d="M${X0 + 61.8} ${bar + 26.2}l8.4-8.4" stroke="${B.fog}" stroke-width="1.5"/>
+<path d="M${X0 + 86.5} ${bar + 12}v20" stroke="${B.rule}"/>
+<text class="m" x="${X0 + 102}" y="${bar + 27}" font-size="15" font-weight="600" fill="${B.snow}">Career, recorded since March 2015</text>
+<text class="m" x="${X1}" y="${bar + 27}" font-size="13" fill="${B.fog}" text-anchor="end">${tenure}</text>
 <path d="M0 ${header + 0.5}H${w}" stroke="${B.rule}"/>
 ${labels.join("")}
 ${grid.join("")}
@@ -468,7 +479,7 @@ ${legendRow}`;
   return card({
     w,
     h,
-    title: "Career, as a performance recording",
+    title: "Career, as a DevTools performance recording",
     desc: `A flame chart of a career, recorded since March 2015. Xerintel in Jerez, intern then full-stack developer, 2015 to 2017. Moved to Barcelona in April 2017. ALEA, software engineer, 2017 to 2018. Boxmotions, full-stack developer, 2018 to 2020. Master Camping, full-stack developer, 2020 to 2021. Holded since November 2021: frontend developer, frontend lead from September 2024, Tech Lead since September 2026. Launched AniJams in July 2026. Colors follow the box model: content is writing code, padding is leading the team, border is owning the architecture, margin is the company.`,
     css,
     body,

@@ -2,13 +2,12 @@
 
 ### I lead the frontend at Holded.
 
-I started in 2015 as an intern in Jerez de la Frontera. Five companies and one move to Barcelona
-later, I'm Tech Lead at [Holded](https://www.holded.com), the business management software for
-SMEs and freelancers. I own the frontend architecture, lead the team's projects, train the people
-on it and hire the ones who join.
+I own its architecture, lead the team's projects, and hire and train the people
+who join. Before Holded I spent six years as a full-stack developer, starting as
+an intern in Jerez.
 
-I graduated first in my cohort from LIDR's tech leadership master, and I never stopped writing
-code: 4,400+ contributions in the last year.
+I finished LIDR's tech leadership master first in my cohort, and I never stopped
+writing code: 4,400+ contributions in the last year.
 
 <img src="assets/career.svg" width="100%" alt="Career as a performance recording, since March 2015: Xerintel in Jerez, intern then full-stack developer. Moved to Barcelona in 2017. ALEA, software engineer. Boxmotions, full-stack developer. Master Camping, full-stack developer. Holded since 2021: frontend developer, frontend lead from 2024, Tech Lead since September 2026. Launched AniJams in July 2026.">
 
