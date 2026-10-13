@@ -9,7 +9,7 @@
 //   box-model colors. The career chart gives those colors a meaning, from the
 //   inside out: content is writing code, padding is leading the team around it,
 //   border is owning the architecture, margin is the company.
-// - The AniJams card (anijams.svg) keeps the game's own look and fonts.
+// - The AniJams and Furbolero cards (anijams.svg, furbolero.svg) keep each game's own look and fonts.
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
@@ -261,7 +261,7 @@ ${row(ty + 110, "Role", "heading")}
     decl("--owns", "frontend architecture"),
     decl("--stack", "React, TypeScript"),
     decl("--team", "hiring and growing it"),
-    decl("--weekends", "anijams.com", true),
+    decl("--weekends", "anijams.com, furbolero.com", true),
     [["}", dim]],
   ]
     .map(
@@ -317,7 +317,7 @@ ${cursor}`;
     w,
     h,
     title: "Vicente Torres, Tech Lead at Holded",
-    desc: "The name Vicente Torres, inspected in browser developer tools. Eleven years building for the web, the last five at Holded. Its styles read: role, Tech Lead at Holded; owns the frontend architecture; stack, React and TypeScript; team, hiring and growing it; weekends, anijams.com.",
+    desc: "The name Vicente Torres, inspected in browser developer tools. Eleven years building for the web, the last five at Holded. Its styles read: role, Tech Lead at Holded; owns the frontend architecture; stack, React and TypeScript; team, hiring and growing it; weekends, anijams.com and furbolero.com.",
     css,
     defs,
     body,
@@ -396,11 +396,14 @@ function career() {
   const marks = [
     ["Moved to Barcelona", month(2017, 4)],
     ["Launched AniJams", month(2026, 7) + 0.9],
+    // Second row: it lands right next to AniJams on the time axis.
+    ["Launched Furbolero", month(2026, 10) + 0.4, 1],
   ]
-    .map(([label, at]) => {
+    .map(([label, at, row = 0]) => {
       const mx = x(at);
       const end = mx > w - 200;
-      return `<path d="M${mx.toFixed(1)} ${timingsY + 20}l5 5-5 5-5-5Z" fill="${B.margin}"/><text class="m" x="${(end ? mx - 10 : mx + 10).toFixed(1)}" y="${timingsY + 29}" font-size="12.5" fill="${B.snow}" text-anchor="${end ? "end" : "start"}">${label}</text>`;
+      const dy = row * 18;
+      return `<path d="M${mx.toFixed(1)} ${timingsY + 20 + dy}l5 5-5 5-5-5Z" fill="${B.margin}"/><text class="m" x="${(end ? mx - 10 : mx + 10).toFixed(1)}" y="${timingsY + 29 + dy}" font-size="12.5" fill="${B.snow}" text-anchor="${end ? "end" : "start"}">${label}</text>`;
     })
     .join("");
 
@@ -480,7 +483,7 @@ ${legendRow}`;
     w,
     h,
     title: "Career, as a DevTools performance recording",
-    desc: `A flame chart of a career, recorded since March 2015. Xerintel in Jerez, intern then full-stack developer, 2015 to 2017. Moved to Barcelona in April 2017. ALEA, software engineer, 2017 to 2018. Boxmotions, full-stack developer, 2018 to 2020. Master Camping, full-stack developer, 2020 to 2021. Holded since November 2021: frontend developer, frontend lead from September 2024, Tech Lead since September 2026. Launched AniJams in July 2026. Colors follow the box model: content is writing code, padding is leading the team, border is owning the architecture, margin is the company.`,
+    desc: `A flame chart of a career, recorded since March 2015. Xerintel in Jerez, intern then full-stack developer, 2015 to 2017. Moved to Barcelona in April 2017. ALEA, software engineer, 2017 to 2018. Boxmotions, full-stack developer, 2018 to 2020. Master Camping, full-stack developer, 2020 to 2021. Holded since November 2021: frontend developer, frontend lead from September 2024, Tech Lead since September 2026. Launched AniJams in July 2026 and Furbolero in October 2026. Colors follow the box model: content is writing code, padding is leading the team, border is owning the architecture, margin is the company.`,
     css,
     body,
     mono: false,
@@ -641,8 +644,133 @@ ${segments}
   });
 }
 
+// ---------------------------------------------------------------------------
+// Furbolero card, in the game's own style
+// ---------------------------------------------------------------------------
+
+// The fonts are Furbolero's own subsets (Barlow, Barlow Condensed, Doto; SIL OFL 1.1).
+const FURB_FONT_DIR = process.env.FURB_FONT_DIR ?? join(homedir(), "Projects/furbolero/public/fonts");
+
+const F = {
+  pitch: "#0A120E",
+  stripe: "#0E1913",
+  line: "#2A3D32",
+  ink: "#EEF3EC",
+  dim: "#A9BBAE",
+  lime: "#C8F03C",
+  gold: "#E9B949",
+  led: "#F3D27A",
+  red: "#FF6B5E",
+  blue: "#1E3A8A",
+};
+
+// The game's logo: an album sticker, tilted, with an italic F.
+const MARK = {"w": 64.08, "h": 80.13, "layers": [{"fill": "#F2F5F1", "d": "M0 12.78L0.15 10.05L1.34 7.59L3.38 5.77L5.96 4.87L40.62 0L56.43 11.92L64.08 66.38L63.93 69.11L62.74 71.57L60.7 73.39L58.13 74.29L16.53 80.13L13.81 79.98L11.35 78.79L9.53 76.75L8.63 74.17Z"}, {"fill": "#C8F03C", "d": "M6.22 13.92L6.29 12.75L6.79 11.7L7.67 10.92L8.77 10.53L46.4 5.25L47.57 5.31L48.63 5.82L49.41 6.69L49.79 7.8L55.64 49.39L55.57 50.56L55.06 51.61L54.19 52.39L53.08 52.78L15.45 58.07L14.28 58L13.23 57.49L12.45 56.62L12.07 55.51Z"}, {"fill": "#0A120E", "d": "M21.59 16.81L30.01 15.63L28.88 48.1L20.46 49.29Z"}, {"fill": "#0A120E", "d": "M21.59 16.81L43.38 13.75L43.11 21.36L21.33 24.42Z"}, {"fill": "#0A120E", "d": "M21.13 30L36.98 27.78L36.75 34.37L20.9 36.6Z"}, {"fill": "#0A120E", "d": "M13.32 64.43L13.36 63.65L13.7 62.94L14.28 62.42L15.02 62.17L54.63 56.6L55.41 56.64L56.11 56.98L56.63 57.57L56.89 58.3L58 66.22L57.96 67L57.62 67.71L57.04 68.23L56.3 68.48L16.69 74.05L15.91 74.01L15.21 73.67L14.69 73.09L14.43 72.35Z"}, {"fill": "#BFC8C1", "d": "M40.62 0L56.43 11.92L42.57 13.86Z"}]};
+
+function furbolero() {
+  const w = 960;
+  const h = 300;
+  const face = (family, weight, style, file) =>
+    `@font-face{font-family:${family};font-weight:${weight};font-style:${style};src:url(data:font/woff2;base64,${readFileSync(join(FURB_FONT_DIR, file)).toString("base64")}) format("woff2")}`;
+  const fonts =
+    face("Cond", 800, "italic", "BarlowCondensed-800i-latin.woff2") +
+    face("Barlow", 400, "normal", "Barlow-400-latin.woff2") +
+    face("Doto", 900, "normal", "Doto-900-latin.woff2");
+
+  // A career two seasons at a time, like the game's share text: up, flat, down or a trophy.
+  const blocks = ["up", "up", "up", "trophy", "up", "trophy", "trophy", "flat", "trophy", "down", "down"];
+  const color = { up: F.lime, flat: "#D9C95A", down: F.red, trophy: F.gold };
+  const ratings = [58, 67, 76, 84, 89];
+  const period = 10;
+  const blockOn = (k) => 0.5 + k * 0.55;
+  const off = 9.2;
+  const keyframes =
+    blocks
+      .map((_, k) => `@keyframes b${k}{0%,${pct(blockOn(k), period)}{opacity:0}${pct(blockOn(k) + 0.2, period)},${pct(off, period)}{opacity:1}${pct(off + 0.4, period)},100%{opacity:0}}`)
+      .join("") +
+    ratings
+      .map((_, k) => {
+        const on = k === 0 ? 0 : blockOn(Math.round((k * (blocks.length - 1)) / (ratings.length - 1)));
+        const next = k === ratings.length - 1 ? off : blockOn(Math.round(((k + 1) * (blocks.length - 1)) / (ratings.length - 1)));
+        return `@keyframes r${k}{0%,${pct(on, period)}{opacity:0}${pct(on + 0.05, period)},${pct(next, period)}{opacity:1}${pct(next + 0.05, period)},100%{opacity:0}}`;
+      })
+      .join("");
+
+  const stripX = 716;
+  const strip = blocks
+    .map((b, k) => `<rect class="blk" style="animation-name:b${k}" x="${stripX + k * 18}" y="178" width="14" height="14" rx="3" fill="${color[b]}"/>`)
+    .join("");
+  const rating = ratings
+    .map((r, k) => `<text class="led rt" style="animation-name:r${k}${k === ratings.length - 1 ? ";opacity:1" : ""}" x="${stripX}" y="160" font-size="58" fill="${F.led}">${r}</text>`)
+    .join("");
+
+  const stats = [
+    ["20", "years of career", 44],
+    ["2", "minutes", 210],
+    ["0", "sign-ups", 330],
+  ]
+    .map(
+      ([value, label, x]) =>
+        `<text class="led" x="${x}" y="228" font-size="32" fill="${F.led}">${value}</text><text class="bar" x="${x}" y="254" font-size="16" fill="${F.dim}">${label}</text>`,
+    )
+    .join("");
+
+  const stripes = Array.from({ length: 8 }, (_, i) => `<rect y="${i * 40}" width="${w}" height="20" fill="${F.stripe}"/>`).join("");
+  const mark = MARK.layers.map((l) => `<path d="${l.d}" fill="${l.fill}"/>`).join("");
+  const cardX = 548;
+  const cardY = 46;
+  const sticker = `<g transform="rotate(-4 ${cardX + 70} ${cardY + 95})">
+<rect x="${cardX - 6}" y="${cardY - 6}" width="152" height="202" rx="14" fill="${F.ink}"/>
+<clipPath id="cromo"><rect x="${cardX}" y="${cardY}" width="140" height="190" rx="9"/></clipPath>
+<g clip-path="url(#cromo)">
+<rect x="${cardX}" y="${cardY}" width="140" height="190" fill="${F.blue}"/>
+${[0, 1, 2, 3].map((i) => `<rect x="${cardX + 18 + i * 34}" y="${cardY}" width="10" height="190" fill="${F.lime}"/>`).join("")}
+<rect x="${cardX + 10}" y="${cardY + 10}" width="48" height="52" rx="6" fill="${F.pitch}" fill-opacity=".85"/>
+<text class="cond" x="${cardX + 16}" y="${cardY + 44}" font-size="30" fill="${F.ink}">89</text>
+<text class="cond" x="${cardX + 16}" y="${cardY + 58}" font-size="13" fill="${F.ink}">DC</text>
+<rect x="${cardX}" y="${cardY + 148}" width="140" height="42" fill="${F.pitch}"/>
+<text class="cond" x="${cardX + 12}" y="${cardY + 177}" font-size="22" fill="${F.ink}">TORRES</text>
+</g></g>`;
+
+  const css = `
+.cond{font-family:Cond,system-ui,sans-serif;font-style:italic;font-weight:800}
+.bar{font-family:Barlow,system-ui,sans-serif}
+.led{font-family:Doto,ui-monospace,monospace;font-weight:900}
+.blk,.rt{animation:${period}s linear infinite}
+.rt{opacity:0}
+${keyframes}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}`;
+
+  const body = `
+<rect width="${w}" height="${h}" fill="${F.pitch}"/>
+${stripes}
+<circle cx="780" cy="150" r="118" fill="none" stroke="${F.line}" stroke-width="3" opacity=".6"/>
+<g transform="translate(44 40) scale(.6)">${mark}</g>
+<text class="cond" x="90" y="84" font-size="52" fill="${F.ink}">FURBOLERO</text>
+<text class="bar" x="44" y="130" font-size="20" fill="${F.ink}">Live a whole football career in two minutes.</text>
+<text class="bar" x="44" y="158" font-size="20" fill="${F.dim}">From the academy to legend. Every decision counts.</text>
+${stats}
+${sticker}
+<text class="bar" x="${stripX}" y="100" font-size="14" fill="${F.dim}">Best rating</text>
+${rating}
+${strip}
+<text class="cond" x="916" y="262" font-size="22" fill="${F.lime}" text-anchor="end">Start your career at furbolero.com</text>`;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-labelledby="title desc">
+<title id="title">Furbolero</title>
+<desc id="desc">Furbolero, the football career simulator: create your player and live twenty years of career in two minutes, from the academy to legend. Free, no sign-up. Start your career at furbolero.com.</desc>
+<style>${fonts}${css}</style>
+<defs><clipPath id="fframe"><rect width="${w}" height="${h}" rx="18"/></clipPath></defs>
+<g clip-path="url(#fframe)">
+${body}
+</g>
+<rect x=".5" y=".5" width="${w - 1}" height="${h - 1}" rx="17.5" fill="none" stroke="${F.line}"/>
+</svg>
+`;
+}
+
 mkdirSync("assets", { recursive: true });
-const out = { "hero.svg": hero(), "career.svg": career(), "anijams.svg": aniJams() };
+const out = { "hero.svg": hero(), "career.svg": career(), "anijams.svg": aniJams(), "furbolero.svg": furbolero() };
 for (const [file, content] of Object.entries(out)) {
   writeFileSync(join("assets", file), content);
   console.log(`assets/${file}  ${(content.length / 1024).toFixed(1)} KB`);
