@@ -9,7 +9,8 @@
 //   box-model colors. The career chart gives those colors a meaning, from the
 //   inside out: content is writing code, padding is leading the team around it,
 //   border is owning the architecture, margin is the company.
-// - The AniJams and Furbolero cards (anijams.svg, furbolero.svg) keep each game's own look and fonts.
+// - The AniJams, Furbolero and Los Catavinos cards (anijams.svg, furbolero.svg,
+//   loscatavinos.svg) keep each project's own look and fonts.
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
@@ -769,8 +770,159 @@ ${body}
 `;
 }
 
+// ---------------------------------------------------------------------------
+// Los Catavinos card, in the site's own style
+// ---------------------------------------------------------------------------
+
+// The fonts are the site's own (Newsreader, Karla, Caveat; SIL OFL 1.1), from its fontsource packages.
+const CATA_FONT_DIR = process.env.CATA_FONT_DIR ?? join(homedir(), "Projects/loscatavinos/node_modules");
+
+const L = {
+  lino: "#EBE4D6",
+  lino2: "#E2D9C7",
+  papel: "#FBF8F1",
+  tinta: "#26201A",
+  suave: "#6A5D4C",
+  linea: "#D9CFBD",
+  boli: "#23408E",
+  verde: "#1D4637",
+  vino: "#B8692A",
+};
+
+// The site's mark: a catavino glass drawn in pen, with its amontillado (viewBox 40 x 64).
+const COPA = {
+  fill: "M11.4 17.5c-.6 2.6-.9 4.6-.8 6.6.3 6.2 4.4 9.1 9.4 9.1 5.1 0 9.1-3.1 9.2-9.5 0-2.2-.3-4.1-.9-6.4-5.6 1.3-11 1.4-16.9.2Z",
+  bowl: "M13.7 3.3c-.4 9.4-4.6 14-4.7 20.1-.1 8.1 4.9 12.1 10.9 12.2 6.2.1 11.1-3.9 11.1-12 0-6-4.1-10.6-4.6-20.2",
+  rim: "M13.6 3.4c4.2-.5 8.6-.4 12.8.1",
+  stem: "M20 35.6c.2 5.6-.2 11.4.1 17.3M10.6 55.2c6-1.6 12.6-1.7 18.9-.1",
+};
+
+const copa = (x, y, scale, { wine = "", stroke = L.boli, width = 2.6 } = {}) => `<g transform="translate(${x} ${y}) scale(${scale})">
+${wine}
+<g fill="none" stroke="${stroke}" stroke-linecap="round" stroke-linejoin="round">
+<path d="${COPA.bowl}" stroke-width="${width}"/><path d="${COPA.rim}" stroke-width="${width * 0.7}" opacity=".7"/><path d="${COPA.stem}" stroke-width="${width}"/>
+</g></g>`;
+
+function losCatavinos() {
+  const w = 960;
+  const h = 300;
+  const face = (family, weight, file) =>
+    `@font-face{font-family:${family};font-weight:${weight};src:url(data:font/woff2;base64,${readFileSync(join(CATA_FONT_DIR, file)).toString("base64")}) format("woff2")}`;
+  const fonts =
+    face("News", "200 800", "@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2") +
+    face("Karla", "200 800", "@fontsource-variable/karla/files/karla-latin-wght-normal.woff2") +
+    face("Caveat", 500, "@fontsource/caveat/files/caveat-latin-500-normal.woff2");
+
+  // The ficha fills itself in: each of them pours their catavinos, then the pen
+  // writes what to order and what they spent. The first and resting frames are the
+  // full card, so a still capture never shows an empty ficha.
+  const period = 10;
+  const pours = [5, 4];
+  const pourOn = (row, k) => 0.6 + row * 1.6 + k * 0.28;
+  const penOn = [4.2, 5.4];
+  const off = 9.2;
+  const keyframes =
+    pours
+      .flatMap((n, row) =>
+        Array.from({ length: n }, (_, k) => {
+          const on = pourOn(row, k);
+          return `@keyframes p${row}${k}{0%{opacity:1}${pct(0.3, period)},${pct(on, period)}{opacity:0}${pct(on + 0.25, period)},${pct(off, period)}{opacity:1}${pct(off + 0.4, period)},100%{opacity:0}}`;
+        }),
+      )
+      .join("") +
+    penOn
+      .map((on, k) => `@keyframes w${k}{0%{stroke-dashoffset:0}${pct(0.3, period)},${pct(on, period)}{stroke-dashoffset:1}${pct(on + 0.9, period)},${pct(off, period)}{stroke-dashoffset:0}${pct(off + 0.4, period)},100%{stroke-dashoffset:1}}`)
+      .join("");
+
+  const fx = 588;
+  const fy = 40;
+  const fw = 316;
+  const fh = 214;
+  const rows = ["Maribel", "Vicente"]
+    .map((name, row) => {
+      const y = fy + 64 + row * 48;
+      const glasses = Array.from({ length: 5 }, (_, k) => {
+        const filled = k < pours[row];
+        const wine = filled ? `<path class="pour" style="animation-name:p${row}${k}" d="${COPA.fill}" fill="${L.vino}" opacity=".9"/>` : "";
+        return copa(fx + 128 + k * 30, y - 28, 0.5, { wine, stroke: filled ? L.boli : L.linea });
+      }).join("");
+      return `<text class="kar" x="${fx + 24}" y="${y}" font-size="17" font-weight="600" fill="${L.tinta}">${name}</text>${glasses}`;
+    })
+    .join("");
+
+  // Pen strokes, not invented words: the ficha shows where the notes go.
+  const scribble = (x, y, len, k) => {
+    let d = `M${x} ${y}`;
+    for (let i = 0; i < len; i += 14) d += ` q4 ${i % 28 ? -7 : -9} 7 -1 t7 ${i % 42 ? 1 : 2}`;
+    return `<path class="pen" style="animation-name:w${k}" pathLength="1" d="${d}" fill="none" stroke="${L.boli}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`;
+  };
+  const notes = [
+    ["What to order", 0, 150],
+    ["What they spent", 1, 70],
+  ]
+    .map(([label, k, len]) => {
+      const y = fy + 188;
+      const x = fx + 24 + k * 170;
+      return `<text class="kar" x="${x}" y="${y - 22}" font-size="12" letter-spacing=".08em" fill="${L.suave}">${label.toUpperCase()}</text>${scribble(x + 2, y, len, k)}`;
+    })
+    .join("");
+
+  const ficha = `<g transform="rotate(-2.5 ${fx + fw / 2} ${fy + fh / 2})" filter="url(#sombra)">
+<rect x="${fx}" y="${fy}" width="${fw}" height="${fh}" rx="6" fill="${L.papel}"/>
+<path d="M${fx + 20} ${fy + 132}H${fx + fw - 20}" stroke="${L.linea}" stroke-dasharray="4 5"/>
+${rows}
+${notes}
+</g>`;
+
+  const stats = [
+    ["21", "places", 44],
+    ["1 to 5", "catavinos each", 150],
+    ["0", "cookies", 336],
+  ]
+    .map(
+      ([value, label, x]) =>
+        `<text class="news" x="${x}" y="228" font-size="32" font-weight="500" fill="${L.verde}">${value}</text><text class="kar" x="${x}" y="254" font-size="16" fill="${L.suave}">${label}</text>`,
+    )
+    .join("");
+
+  const css = `
+.news{font-family:News,Georgia,serif}
+.kar{font-family:Karla,system-ui,sans-serif}
+.boli{font-family:Caveat,cursive;font-weight:500}
+.pour{animation:${period}s linear infinite}
+.pen{stroke-dasharray:1;animation:${period}s linear infinite}
+${keyframes}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}`;
+
+  const body = `
+<rect width="${w}" height="${h}" fill="${L.lino}"/>
+${Array.from({ length: 15 }, (_, i) => `<path d="M0 ${i * 20 + 10}H${w}" stroke="${L.lino2}" stroke-opacity=".7"/>`).join("")}
+${copa(40, 32, 0.95, { wine: `<path d="${COPA.fill}" fill="${L.vino}" opacity=".9"/>`, width: 2.8 })}
+<text class="news" x="88" y="84" font-size="52" font-weight="400" letter-spacing="-.025em" fill="${L.tinta}">Los Catavinos</text>
+<text class="kar" x="44" y="130" font-size="20" fill="${L.tinta}">Bars and restaurants in Jerez,</text>
+<text class="kar" x="44" y="158" font-size="20" fill="${L.tinta}">rated by Maribel and Vicente.</text>
+${stats}
+${ficha}
+<text class="boli" x="916" y="282" font-size="28" fill="${L.boli}" text-anchor="end">Find a place at loscatavinos.com</text>`;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-labelledby="title desc">
+<title id="title">Los Catavinos</title>
+<desc id="desc">Los Catavinos, bars and restaurants in Jerez rated by Maribel and Vicente: what to order, what they spent, and a score from 1 to 5 catavinos from each of them. 21 places, no cookies. Find a place at loscatavinos.com.</desc>
+<style>${fonts}${css}</style>
+<defs>
+<clipPath id="lframe"><rect width="${w}" height="${h}" rx="18"/></clipPath>
+<filter id="sombra" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#3C2814" flood-opacity=".22"/></filter>
+</defs>
+<g clip-path="url(#lframe)">
+${body}
+</g>
+<rect x=".5" y=".5" width="${w - 1}" height="${h - 1}" rx="17.5" fill="none" stroke="${L.linea}"/>
+</svg>
+`;
+}
+
 mkdirSync("assets", { recursive: true });
-const out = { "hero.svg": hero(), "career.svg": career(), "anijams.svg": aniJams(), "furbolero.svg": furbolero() };
+const out = { "hero.svg": hero(), "career.svg": career(), "anijams.svg": aniJams(), "furbolero.svg": furbolero(), "loscatavinos.svg": losCatavinos() };
 for (const [file, content] of Object.entries(out)) {
   writeFileSync(join("assets", file), content);
   console.log(`assets/${file}  ${(content.length / 1024).toFixed(1)} KB`);

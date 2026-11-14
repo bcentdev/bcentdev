@@ -24,6 +24,13 @@ no sign-up.
 
 <a href="https://furbolero.com"><img src="assets/furbolero.svg" width="100%" alt="Furbolero, the football career simulator: create your player and live twenty years of career in two minutes, from the academy to legend. Free, no sign-up. Start your career at furbolero.com."></a>
 
+Los Catavinos is for my parents, Maribel and Vicente: the bars and restaurants they go to in Jerez,
+each rated 1 to 5 catavinos by both of them, with what to order and what they spent. They add places
+from a private notebook on their phone that reads the receipt from a photo, and the search answers
+questions using only what they have written down.
+
+<a href="https://loscatavinos.com"><img src="assets/loscatavinos.svg" width="100%" alt="Los Catavinos, bars and restaurants in Jerez rated by Maribel and Vicente: what to order, what they spent, and a score from 1 to 5 catavinos from each of them. 21 places, no cookies. Find a place at loscatavinos.com."></a>
+
 Hiring, building something, or want to talk frontend leadership? Find me on
 [LinkedIn](https://www.linkedin.com/in/vicente-torres-aragon/), on [X](https://x.com/bcentdev)
 or at [iam@vicentetorr.es](mailto:iam@vicentetorr.es).
