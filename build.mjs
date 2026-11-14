@@ -553,7 +553,23 @@ ${body}
 `;
 }
 
-function aniJams() {
+function aniJams(lang = "en") {
+  const t = {
+    en: {
+      line1: "One second of an anime opening.",
+      line2: "Name the show, or hear a little more.",
+      stats: [["1,527", "songs"], ["394", "anime"], ["0", "frameworks"]],
+      cta: "Play today's song at anijams.com",
+      desc: "AniJams, the daily anime music game: one second of an anime opening, name the show or hear a little more. 1,527 songs, 394 anime, zero frameworks. Play today's song at anijams.com.",
+    },
+    es: {
+      line1: "Un segundo de un opening de anime.",
+      line2: "Adivina la serie o escucha un poco más.",
+      stats: [["1.527", "canciones"], ["394", "anime"], ["0", "frameworks"]],
+      cta: "Juega la canción de hoy en anijams.com",
+      desc: "AniJams, el juego diario de música de anime: un segundo de un opening de anime, adivina la serie o escucha un poco más. 1.527 canciones, 394 anime, cero frameworks. Juega la canción de hoy en anijams.com.",
+    },
+  }[lang];
   const w = 960;
   const h = 300;
   const unlocks = [1, 2, 4, 7, 11, 16];
@@ -603,11 +619,8 @@ function aniJams() {
     })
     .join("");
 
-  const stats = [
-    ["1,527", "songs", 44],
-    ["394", "anime", 172],
-    ["0", "frameworks", 270],
-  ]
+  const stats = [44, 172, 270]
+    .map((x, i) => [...t.stats[i], x])
     .map(
       ([value, label, x]) =>
         `<text class="zen" x="${x}" y="226" font-size="30" font-weight="700" fill="${C.cream}">${value}</text><text class="dot" x="${x}" y="252" font-size="16" fill="${C.dim}">${label}</text>`,
@@ -625,19 +638,19 @@ ${keyframes}`;
   const body = `
 <rect width="${w}" height="${h}" fill="url(#glow)"/>
 <text class="dot" x="44" y="88" font-size="48" fill="${C.cream}" filter="url(#neon)">AniJams</text>
-<text class="zen" x="44" y="130" font-size="20" fill="${C.cream}">One second of an anime opening.</text>
-<text class="zen" x="44" y="158" font-size="20" fill="${C.dim}">Name the show, or hear a little more.</text>
+<text class="zen" x="44" y="130" font-size="20" fill="${C.cream}">${t.line1}</text>
+<text class="zen" x="44" y="158" font-size="20" fill="${C.dim}">${t.line2}</text>
 ${stats}
 ${heights.map((_, i) => bar(i, C.wave)).join("")}
 ${unlocks.map((_, k) => tick(k, C.wave)).join("")}
 ${segments}
-<text class="dot" x="916" y="262" font-size="16" fill="${C.neon}" text-anchor="end">Play today's song at anijams.com</text>`;
+<text class="dot" x="916" y="262" font-size="16" fill="${C.neon}" text-anchor="end">${t.cta}</text>`;
 
   return svg({
     w,
     h,
     title: "AniJams",
-    desc: "AniJams, the daily anime music game: one second of an anime opening, name the show or hear a little more. 1,527 songs, 394 anime, zero frameworks. Play today's song at anijams.com.",
+    desc: t.desc,
     fonts: ["zen400", "zen700", "dot"],
     css,
     defs,
@@ -668,7 +681,25 @@ const F = {
 // The game's logo: an album sticker, tilted, with an italic F.
 const MARK = {"w": 64.08, "h": 80.13, "layers": [{"fill": "#F2F5F1", "d": "M0 12.78L0.15 10.05L1.34 7.59L3.38 5.77L5.96 4.87L40.62 0L56.43 11.92L64.08 66.38L63.93 69.11L62.74 71.57L60.7 73.39L58.13 74.29L16.53 80.13L13.81 79.98L11.35 78.79L9.53 76.75L8.63 74.17Z"}, {"fill": "#C8F03C", "d": "M6.22 13.92L6.29 12.75L6.79 11.7L7.67 10.92L8.77 10.53L46.4 5.25L47.57 5.31L48.63 5.82L49.41 6.69L49.79 7.8L55.64 49.39L55.57 50.56L55.06 51.61L54.19 52.39L53.08 52.78L15.45 58.07L14.28 58L13.23 57.49L12.45 56.62L12.07 55.51Z"}, {"fill": "#0A120E", "d": "M21.59 16.81L30.01 15.63L28.88 48.1L20.46 49.29Z"}, {"fill": "#0A120E", "d": "M21.59 16.81L43.38 13.75L43.11 21.36L21.33 24.42Z"}, {"fill": "#0A120E", "d": "M21.13 30L36.98 27.78L36.75 34.37L20.9 36.6Z"}, {"fill": "#0A120E", "d": "M13.32 64.43L13.36 63.65L13.7 62.94L14.28 62.42L15.02 62.17L54.63 56.6L55.41 56.64L56.11 56.98L56.63 57.57L56.89 58.3L58 66.22L57.96 67L57.62 67.71L57.04 68.23L56.3 68.48L16.69 74.05L15.91 74.01L15.21 73.67L14.69 73.09L14.43 72.35Z"}, {"fill": "#BFC8C1", "d": "M40.62 0L56.43 11.92L42.57 13.86Z"}]};
 
-function furbolero() {
+function furbolero(lang = "en") {
+  const t = {
+    en: {
+      line1: "Live a whole football career in two minutes.",
+      line2: "From the academy to legend. Every decision counts.",
+      stats: [["20", "years of career"], ["2", "minutes"], ["0", "sign-ups"]],
+      best: "Best rating",
+      cta: "Start your career at furbolero.com",
+      desc: "Furbolero, the football career simulator: create your player and live twenty years of career in two minutes, from the academy to legend. Free, no sign-up. Start your career at furbolero.com.",
+    },
+    es: {
+      line1: "Vive una carrera de futbolista en dos minutos.",
+      line2: "De la cantera a leyenda. Cada decisión cuenta.",
+      stats: [["20", "años de carrera"], ["2", "minutos"], ["0", "registros"]],
+      best: "Mejor media",
+      cta: "Empieza tu carrera en furbolero.com",
+      desc: "Furbolero, el simulador de carrera de futbolista: crea tu jugador y vive veinte años de carrera en dos minutos, de la cantera a leyenda. Gratis, sin registro. Empieza tu carrera en furbolero.com.",
+    },
+  }[lang];
   const w = 960;
   const h = 300;
   const face = (family, weight, style, file) =>
@@ -705,11 +736,8 @@ function furbolero() {
     .map((r, k) => `<text class="led rt" style="animation-name:r${k}${k === ratings.length - 1 ? ";opacity:1" : ""}" x="${stripX}" y="160" font-size="58" fill="${F.led}">${r}</text>`)
     .join("");
 
-  const stats = [
-    ["20", "years of career", 44],
-    ["2", "minutes", 210],
-    ["0", "sign-ups", 330],
-  ]
+  const stats = [44, 210, 330]
+    .map((x, i) => [...t.stats[i], x])
     .map(
       ([value, label, x]) =>
         `<text class="led" x="${x}" y="228" font-size="32" fill="${F.led}">${value}</text><text class="bar" x="${x}" y="254" font-size="16" fill="${F.dim}">${label}</text>`,
@@ -748,18 +776,18 @@ ${stripes}
 <circle cx="780" cy="150" r="118" fill="none" stroke="${F.line}" stroke-width="3" opacity=".6"/>
 <g transform="translate(44 40) scale(.6)">${mark}</g>
 <text class="cond" x="90" y="84" font-size="52" fill="${F.ink}">FURBOLERO</text>
-<text class="bar" x="44" y="130" font-size="20" fill="${F.ink}">Live a whole football career in two minutes.</text>
-<text class="bar" x="44" y="158" font-size="20" fill="${F.dim}">From the academy to legend. Every decision counts.</text>
+<text class="bar" x="44" y="130" font-size="20" fill="${F.ink}">${t.line1}</text>
+<text class="bar" x="44" y="158" font-size="20" fill="${F.dim}">${t.line2}</text>
 ${stats}
 ${sticker}
-<text class="bar" x="${stripX}" y="100" font-size="14" fill="${F.dim}">Best rating</text>
+<text class="bar" x="${stripX}" y="100" font-size="14" fill="${F.dim}">${t.best}</text>
 ${rating}
 ${strip}
-<text class="cond" x="916" y="262" font-size="22" fill="${F.lime}" text-anchor="end">Start your career at furbolero.com</text>`;
+<text class="cond" x="916" y="262" font-size="22" fill="${F.lime}" text-anchor="end">${t.cta}</text>`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-labelledby="title desc">
 <title id="title">Furbolero</title>
-<desc id="desc">Furbolero, the football career simulator: create your player and live twenty years of career in two minutes, from the academy to legend. Free, no sign-up. Start your career at furbolero.com.</desc>
+<desc id="desc">${t.desc}</desc>
 <style>${fonts}${css}</style>
 <defs><clipPath id="fframe"><rect width="${w}" height="${h}" rx="18"/></clipPath></defs>
 <g clip-path="url(#fframe)">
@@ -803,7 +831,25 @@ ${wine}
 <path d="${COPA.bowl}" stroke-width="${width}"/><path d="${COPA.rim}" stroke-width="${width * 0.7}" opacity=".7"/><path d="${COPA.stem}" stroke-width="${width}"/>
 </g></g>`;
 
-function losCatavinos() {
+function losCatavinos(lang = "en") {
+  const t = {
+    en: {
+      line1: "Bars and restaurants in Jerez,",
+      line2: "rated by Maribel and Vicente.",
+      stats: [["21", "places"], ["1 to 5", "catavinos each"], ["0", "cookies"]],
+      notes: ["What to order", "What they spent"],
+      cta: "Find a place at loscatavinos.com",
+      desc: "Los Catavinos, bars and restaurants in Jerez rated by Maribel and Vicente: what to order, what they spent, and a score from 1 to 5 catavinos from each of them. 21 places, no cookies. Find a place at loscatavinos.com.",
+    },
+    es: {
+      line1: "Bares y restaurantes de Jerez,",
+      line2: "con la nota de Maribel y Vicente.",
+      stats: [["21", "sitios"], ["1 a 5", "catavinos cada uno"], ["0", "cookies"]],
+      notes: ["Qué pedir", "Lo que gastaron"],
+      cta: "Busca sitio en loscatavinos.com",
+      desc: "Los Catavinos, bares y restaurantes de Jerez con la nota de Maribel y Vicente: qué pedir, lo que gastaron y de 1 a 5 catavinos de cada uno. 21 sitios, sin cookies. Busca sitio en loscatavinos.com.",
+    },
+  }[lang];
   const w = 960;
   const h = 300;
   const face = (family, weight, file) =>
@@ -857,8 +903,8 @@ function losCatavinos() {
     return `<path class="pen" style="animation-name:w${k}" pathLength="1" d="${d}" fill="none" stroke="${L.boli}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`;
   };
   const notes = [
-    ["What to order", 0, 150],
-    ["What they spent", 1, 70],
+    [t.notes[0], 0, 150],
+    [t.notes[1], 1, 70],
   ]
     .map(([label, k, len]) => {
       const y = fy + 188;
@@ -874,11 +920,8 @@ ${rows}
 ${notes}
 </g>`;
 
-  const stats = [
-    ["21", "places", 44],
-    ["1 to 5", "catavinos each", 150],
-    ["0", "cookies", 336],
-  ]
+  const stats = [44, 150, 336]
+    .map((x, i) => [...t.stats[i], x])
     .map(
       ([value, label, x]) =>
         `<text class="news" x="${x}" y="228" font-size="32" font-weight="500" fill="${L.verde}">${value}</text><text class="kar" x="${x}" y="254" font-size="16" fill="${L.suave}">${label}</text>`,
@@ -899,15 +942,15 @@ ${keyframes}
 ${Array.from({ length: 15 }, (_, i) => `<path d="M0 ${i * 20 + 10}H${w}" stroke="${L.lino2}" stroke-opacity=".7"/>`).join("")}
 ${copa(40, 32, 0.95, { wine: `<path d="${COPA.fill}" fill="${L.vino}" opacity=".9"/>`, width: 2.8 })}
 <text class="news" x="88" y="84" font-size="52" font-weight="400" letter-spacing="-.025em" fill="${L.tinta}">Los Catavinos</text>
-<text class="kar" x="44" y="130" font-size="20" fill="${L.tinta}">Bars and restaurants in Jerez,</text>
-<text class="kar" x="44" y="158" font-size="20" fill="${L.tinta}">rated by Maribel and Vicente.</text>
+<text class="kar" x="44" y="130" font-size="20" fill="${L.tinta}">${t.line1}</text>
+<text class="kar" x="44" y="158" font-size="20" fill="${L.tinta}">${t.line2}</text>
 ${stats}
 ${ficha}
-<text class="boli" x="916" y="282" font-size="28" fill="${L.boli}" text-anchor="end">Find a place at loscatavinos.com</text>`;
+<text class="boli" x="916" y="282" font-size="28" fill="${L.boli}" text-anchor="end">${t.cta}</text>`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-labelledby="title desc">
 <title id="title">Los Catavinos</title>
-<desc id="desc">Los Catavinos, bars and restaurants in Jerez rated by Maribel and Vicente: what to order, what they spent, and a score from 1 to 5 catavinos from each of them. 21 places, no cookies. Find a place at loscatavinos.com.</desc>
+<desc id="desc">${t.desc}</desc>
 <style>${fonts}${css}</style>
 <defs>
 <clipPath id="lframe"><rect width="${w}" height="${h}" rx="18"/></clipPath>
@@ -921,8 +964,18 @@ ${body}
 `;
 }
 
-mkdirSync("assets", { recursive: true });
-const out = { "hero.svg": hero(), "career.svg": career(), "anijams.svg": aniJams(), "furbolero.svg": furbolero(), "loscatavinos.svg": losCatavinos() };
+mkdirSync(join("assets", "es"), { recursive: true });
+// The project cards also come in Spanish, for the Spanish version of bcent.dev.
+const out = {
+  "hero.svg": hero(),
+  "career.svg": career(),
+  "anijams.svg": aniJams(),
+  "furbolero.svg": furbolero(),
+  "loscatavinos.svg": losCatavinos(),
+  "es/anijams.svg": aniJams("es"),
+  "es/furbolero.svg": furbolero("es"),
+  "es/loscatavinos.svg": losCatavinos("es"),
+};
 for (const [file, content] of Object.entries(out)) {
   writeFileSync(join("assets", file), content);
   console.log(`assets/${file}  ${(content.length / 1024).toFixed(1)} KB`);
