@@ -13,6 +13,12 @@ writing code: 4,400+ contributions in the last year.
 
 ### And on weekends, I launch things.
 
+Vero is the one I'm building to be a business: cookie-free web analytics for SaaS that ties each
+sale from Stripe, Lemon Squeezy or Paddle to the visit and the traffic source that brought it. It's
+in a free beta, with a waitlist.
+
+<a href="https://getvero.dev/?utm_source=github&utm_campaign=profile"><img src="assets/vero.svg" width="100%" alt="Vero, cookie-free web analytics for SaaS: each sale tied to the visit and the traffic source that brought it. The demo's sample data shows direct traffic with 3,535 visitors and no sales, next to twitter with 1,245 visitors and €4,821. A 1.2 KB script, no cookies, 9 optional modules. Free beta at getvero.dev."></a>
+
 AniJams took one weekend to build and has been live every day since: designed, built and shipped
 end to end, with no framework and no ads.
 

@@ -9,8 +9,8 @@
 //   box-model colors. The career chart gives those colors a meaning, from the
 //   inside out: content is writing code, padding is leading the team around it,
 //   border is owning the architecture, margin is the company.
-// - The AniJams, Furbolero and Los Catavinos cards (anijams.svg, furbolero.svg,
-//   loscatavinos.svg) keep each project's own look and fonts.
+// - The Vero, AniJams, Furbolero and Los Catavinos cards (vero.svg, anijams.svg,
+//   furbolero.svg, loscatavinos.svg) keep each project's own look and fonts.
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
@@ -964,14 +964,144 @@ ${body}
 `;
 }
 
+// ---------------------------------------------------------------------------
+// Vero card, in the product's own style
+// ---------------------------------------------------------------------------
+
+// The fonts are Vero's own subsets (Geist, Geist Mono; SIL OFL 1.1), from its landing.
+const VERO_FONT_DIR = process.env.VERO_FONT_DIR ?? join(homedir(), "Projects/vero/apps/landing/public/fonts");
+
+const V = {
+  bg: "#000000",
+  raised: "#0d0d0e",
+  fg: "#ffffff",
+  accent: "#34d399",
+};
+
+function vero(lang = "en") {
+  const t = {
+    en: {
+      line1: "Web analytics that put the money",
+      line2: "next to each traffic source.",
+      stats: [["1.2 KB", "script"], ["0", "cookies"], ["9", "optional modules"]],
+      head: ["Source", "Visitors", "Revenue"],
+      rows: [["direct", "3,535", "€0"], ["news.ycombinator.com", "3,420", "€7,124"], ["twitter", "1,245", "€4,821"]],
+      sample: "Demo, sample data",
+      cta: "Free beta at getvero.dev",
+      desc: "Vero, cookie-free web analytics for SaaS: each sale tied to the visit and the traffic source that brought it. The demo's sample data shows direct traffic with 3,535 visitors and no sales, next to twitter with 1,245 visitors and €4,821. A 1.2 KB script, no cookies, 9 optional modules. Free beta at getvero.dev.",
+    },
+    es: {
+      line1: "Analítica web que pone el dinero",
+      line2: "al lado de cada fuente de tráfico.",
+      stats: [["1,2 KB", "script"], ["0", "cookies"], ["9", "módulos opcionales"]],
+      head: ["Fuente", "Visitantes", "Ingresos"],
+      rows: [["direct", "3.535", "0 €"], ["news.ycombinator.com", "3.420", "7.124 €"], ["twitter", "1.245", "4.821 €"]],
+      sample: "Demo, datos de ejemplo",
+      cta: "Beta gratis en getvero.dev",
+      desc: "Vero, analítica web sin cookies para SaaS: cada venta unida a la visita y a la fuente de tráfico que la trajo. Los datos de ejemplo de la demo muestran el tráfico directo con 3.535 visitantes y ninguna venta, junto a twitter con 1.245 visitantes y 4.821 €. Un script de 1,2 KB, sin cookies, 9 módulos opcionales. Beta gratis en getvero.dev.",
+    },
+  }[lang];
+  const w = 960;
+  const h = 300;
+  const face = (family, file) =>
+    `@font-face{font-family:${family};font-weight:100 900;src:url(data:font/woff2;base64,${readFileSync(join(VERO_FONT_DIR, file)).toString("base64")}) format("woff2")}`;
+  const fonts = face("Geist", "geist-latin.woff2") + face("GeistMono", "geist-mono-latin.woff2");
+
+  // The table fills itself in: the visits draw first, then the money lands next
+  // to them. The first and resting frames are the full table, so a still capture
+  // never shows an empty one.
+  const period = 10;
+  const visits = [3535, 3420, 1245];
+  const barOn = (i) => 0.6 + i * 0.3;
+  const moneyOn = (i) => 2.6 + i * 0.7;
+  const off = 9.2;
+  const keyframes = visits
+    .map(
+      (_, i) =>
+        `@keyframes vb${i}{0%{transform:scaleX(1)}${pct(0.3, period)},${pct(barOn(i), period)}{transform:scaleX(0)}${pct(barOn(i) + 0.7, period)},${pct(off, period)}{transform:scaleX(1)}${pct(off + 0.4, period)},100%{transform:scaleX(0)}}` +
+        `@keyframes vm${i}{0%{opacity:1}${pct(0.3, period)},${pct(moneyOn(i), period)}{opacity:0}${pct(moneyOn(i) + 0.3, period)},${pct(off, period)}{opacity:1}${pct(off + 0.4, period)},100%{opacity:0}}`,
+    )
+    .join("");
+
+  const px = 548;
+  const py = 34;
+  const pw = 368;
+  const ph = 196;
+  const colVisits = px + 262;
+  const colMoney = px + pw - 20;
+  const rows = t.rows
+    .map(([source, visitors, money], i) => {
+      const y = py + 72 + i * 40;
+      const paid = i > 0;
+      const barW = (visits[i] / visits[0]) * 190;
+      return `<rect class="bar" style="animation-name:vb${i}" x="${px + 22}" y="${y + 9}" width="${barW.toFixed(1)}" height="3" rx="1.5" fill="${V.fg}" fill-opacity=".28"/>
+<text class="gm" x="${px + 22}" y="${y}" font-size="13.5" fill="${V.fg}" fill-opacity=".84">${source}</text>
+<text class="gm" x="${colVisits}" y="${y}" font-size="13.5" fill="${V.fg}" fill-opacity=".62" text-anchor="end">${visitors}</text>
+<text class="gm money" style="animation-name:vm${i}" x="${colMoney}" y="${y}" font-size="14.5" font-weight="${paid ? 600 : 400}" fill="${paid ? V.accent : V.fg}" fill-opacity="${paid ? 1 : 0.5}" text-anchor="end">${money}</text>`;
+    })
+    .join("");
+
+  const table = `<rect x="${px}" y="${py}" width="${pw}" height="${ph}" rx="12" fill="${V.raised}" stroke="${V.fg}" stroke-opacity=".11"/>
+<text class="g" x="${px + 22}" y="${py + 30}" font-size="12.5" font-weight="500" fill="${V.fg}" fill-opacity=".5">${t.head[0]}</text>
+<text class="g" x="${colVisits}" y="${py + 30}" font-size="12.5" font-weight="500" fill="${V.fg}" fill-opacity=".5" text-anchor="end">${t.head[1]}</text>
+<text class="g" x="${colMoney}" y="${py + 30}" font-size="12.5" font-weight="500" fill="${V.fg}" fill-opacity=".5" text-anchor="end">${t.head[2]}</text>
+<path d="M${px + 12} ${py + 44}H${px + pw - 12}" stroke="${V.fg}" stroke-opacity=".11"/>
+${rows}
+<text class="g" x="${px + 22}" y="${py + ph - 14}" font-size="12" fill="${V.fg}" fill-opacity=".5">${t.sample}</text>`;
+
+  const stats = [44, 190, 290]
+    .map((x, i) => [...t.stats[i], x])
+    .map(
+      ([value, label, x]) =>
+        `<text class="g" x="${x}" y="228" font-size="32" font-weight="600" letter-spacing="-.02em" fill="${V.fg}">${value}</text><text class="g" x="${x}" y="254" font-size="16" fill="${V.fg}" fill-opacity=".62">${label}</text>`,
+    )
+    .join("");
+
+  const css = `
+.g{font-family:Geist,system-ui,sans-serif}
+.gm{font-family:GeistMono,ui-monospace,monospace;font-variant-ligatures:none}
+.bar{transform-box:fill-box;transform-origin:left center;animation:${period}s cubic-bezier(.2,.7,.2,1) infinite}
+.money{animation:${period}s linear infinite}
+${keyframes}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}`;
+
+  const body = `
+<rect width="${w}" height="${h}" fill="${V.bg}"/>
+<circle cx="62" cy="64" r="30" fill="url(#vglow)"/>
+<circle cx="62" cy="64" r="12" fill="${V.accent}"/>
+<text class="g" x="100" y="82" font-size="52" font-weight="600" letter-spacing="-.04em" fill="${V.fg}">Vero</text>
+<text class="g" x="44" y="134" font-size="20" fill="${V.fg}" fill-opacity=".84">${t.line1}</text>
+<text class="g" x="44" y="162" font-size="20" fill="${V.fg}" fill-opacity=".84">${t.line2}</text>
+${stats}
+${table}
+<text class="g" x="916" y="268" font-size="18" font-weight="500" fill="${V.accent}" text-anchor="end">${t.cta}</text>`;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-labelledby="title desc">
+<title id="title">Vero</title>
+<desc id="desc">${t.desc}</desc>
+<style>${fonts}${css}</style>
+<defs>
+<clipPath id="vframe"><rect width="${w}" height="${h}" rx="18"/></clipPath>
+<radialGradient id="vglow" cx="62" cy="64" r="30" gradientUnits="userSpaceOnUse"><stop offset=".4" stop-color="${V.accent}" stop-opacity=".5"/><stop offset=".7" stop-color="${V.accent}" stop-opacity=".16"/><stop offset="1" stop-color="${V.accent}" stop-opacity="0"/></radialGradient>
+</defs>
+<g clip-path="url(#vframe)">
+${body}
+</g>
+<rect x=".5" y=".5" width="${w - 1}" height="${h - 1}" rx="17.5" fill="none" stroke="${V.fg}" stroke-opacity=".2"/>
+</svg>
+`;
+}
+
 mkdirSync(join("assets", "es"), { recursive: true });
 // The project cards also come in Spanish, for the Spanish version of bcent.dev.
 const out = {
   "hero.svg": hero(),
   "career.svg": career(),
+  "vero.svg": vero(),
   "anijams.svg": aniJams(),
   "furbolero.svg": furbolero(),
   "loscatavinos.svg": losCatavinos(),
+  "es/vero.svg": vero("es"),
   "es/anijams.svg": aniJams("es"),
   "es/furbolero.svg": furbolero("es"),
   "es/loscatavinos.svg": losCatavinos("es"),
